@@ -459,7 +459,10 @@ One failed `su` authentication at 11:53:36 is low severity on its own, but worth
 
 ---
 
+
+
 ## Check Your Understanding
+
 
 **1.** What is the core difference between traditional perimeter security and Zero Trust?
 
@@ -505,6 +508,69 @@ On a Tailscale free single-user account, all devices share the same owner identi
 </details>
 
 ---
+
+## 📋 Command Reference
+
+Every command used in this lab, explained in plain English.
+
+### Tailscale Commands
+
+| Command | What it does |
+|---|---|
+| `curl -fsSL https://tailscale.com/install.sh \| sh` | Downloads and runs the Tailscale installer. `curl` fetches the file, the pipe `\|` sends it straight to `sh` which executes it. |
+| `sudo tailscale up` | Starts Tailscale and gives you an authentication URL. Until you visit that URL and log in, the machine isn't connected to your network. |
+| `tailscale status` | Lists all machines currently connected to your Tailscale network, their IPs, and which account authenticated them. |
+
+### Network Testing Commands
+
+| Command | What it does |
+|---|---|
+| `ping <ip>` | Sends small packets to a machine and waits for a response. Used to check if two machines can reach each other. Press `Ctrl+C` to stop. |
+| `curl http://<ip>:<port>` | Makes an HTTP request to a specific IP and port. If something is running there, you get a response. If not, it fails or hangs. |
+| `curl --connect-timeout 5 http://<ip>:<port>` | Same as above but gives up after 5 seconds instead of waiting forever. Useful for testing blocked ports. |
+
+### Firewall Commands (ufw)
+
+| Command | What it does |
+|---|---|
+| `sudo ufw enable` | Turns the firewall on. Before this, ufw is installed but not actually blocking anything. |
+| `sudo ufw default deny incoming` | Sets the default rule — any incoming connection that doesn't have an explicit allow rule gets dropped silently. |
+| `sudo ufw allow 8080/tcp` | Creates an exception to the default deny — port 8080 using TCP protocol is now allowed through. |
+| `sudo ufw deny in on tailscale0` | Blocks all incoming traffic specifically on the Tailscale network interface (`tailscale0`). |
+| `sudo ufw allow in on tailscale0 to any port 8080 proto tcp` | Adds a specific exception on the Tailscale interface — only port 8080 is permitted through. |
+| `sudo ufw status verbose` | Shows all active firewall rules and the default policy. Always run this to confirm your rules applied correctly. |
+
+### User Management Commands
+
+| Command | What it does |
+|---|---|
+| `sudo adduser junioradmin` | Creates a new Linux user account called junioradmin. Prompts you to set a password and optional details. |
+| `su - junioradmin` | Switches your current terminal session to the junioradmin user. The `-` means it loads a full login environment for that user. |
+| `exit` | Leaves the current user session and returns to the previous one. |
+
+### Service Management Commands
+
+| Command | What it does |
+|---|---|
+| `sudo apt install nginx -y` | Downloads and installs the nginx web server. `apt` is Linux Mint's package manager. `-y` automatically says yes to any prompts. |
+| `sudo systemctl status nginx` | Shows whether nginx is running, when it started, and its recent log output. Green "active (running)" means it's up. |
+| `sudo systemctl restart nginx` | Stops nginx and starts it again. Used when you've changed a config file and need the service to reload. |
+| `python3 -m http.server 8080` | Starts a simple web server on port 8080 using Python. It serves whatever files are in the current directory. No installation needed — Python ships with Linux Mint. |
+
+### Sudo and Permissions Commands
+
+| Command | What it does |
+|---|---|
+| `sudo visudo` | Opens the sudoers file in a safe editor. Always use `visudo` instead of editing the file directly — it validates your changes before saving so you can't accidentally lock yourself out. |
+| `sudo cat /etc/shadow` | Attempts to read the system password file as root. This file contains hashed passwords for every user. In this lab, junioradmin is blocked from running this. |
+
+### Log Commands
+
+| Command | What it does |
+|---|---|
+| `sudo cat /var/log/auth.log` | Reads the authentication log — every login, sudo command, failed attempt, and session open/close is recorded here. |
+| `tail -50` | When piped after another command, shows only the last 50 lines of output instead of the whole file. Useful for large log files. |
+| `sudo cat /var/log/auth.log \| tail -50` | Combines both — reads the auth log and shows only the most recent 50 lines. |
 
 ## 🎉 Lab Complete
 
