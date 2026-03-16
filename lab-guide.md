@@ -2,6 +2,7 @@
 
 > **Difficulty:** Beginner | **Duration:** ~2 hours | **Standard:** NIST SP 800-207
 
+
 ---
 
 ## Table of Contents
@@ -17,6 +18,7 @@
 - [Check Your Understanding](#check-your-understanding)
 
 ---
+
 
 ## Why These Tools?
 
@@ -40,6 +42,7 @@ Zero Trust concepts aren't OS-specific, but the tools in this lab — `ufw`, `su
 
 ---
 
+
 ## The Big Picture
 
 ### Traditional Security (Before)
@@ -52,6 +55,7 @@ Internet → [Firewall] → Internal Network
 ```
 
 Once an attacker gets past the firewall, they have unrestricted access to every machine, port, and file. This is called **implicit trust** — being inside the perimeter is treated as proof that you belong there. It isn't.
+
 
 ### Zero Trust Architecture (After)
 
@@ -427,6 +431,7 @@ Here is what the co-pilot analysis looks like against the auth.log generated dur
 
 ---
 
+
 **🔍 Co-pilot Analysis**
 
 | Time | User | Event | Severity |
@@ -509,6 +514,8 @@ On a Tailscale free single-user account, all devices share the same owner identi
 
 ---
 
+
+
 ## 📋 Command Reference
 
 Every command used in this lab, explained in plain English.
@@ -564,6 +571,7 @@ Every command used in this lab, explained in plain English.
 | `sudo visudo` | Opens the sudoers file in a safe editor. Always use `visudo` instead of editing the file directly — it validates your changes before saving so you can't accidentally lock yourself out. |
 | `sudo cat /etc/shadow` | Attempts to read the system password file as root. This file contains hashed passwords for every user. In this lab, junioradmin is blocked from running this. |
 
+
 ### Log Commands
 
 | Command | What it does |
@@ -571,6 +579,9 @@ Every command used in this lab, explained in plain English.
 | `sudo cat /var/log/auth.log` | Reads the authentication log — every login, sudo command, failed attempt, and session open/close is recorded here. |
 | `tail -50` | When piped after another command, shows only the last 50 lines of output instead of the whole file. Useful for large log files. |
 | `sudo cat /var/log/auth.log \| tail -50` | Combines both — reads the auth log and shows only the most recent 50 lines. |
+
+
+---
 
 ## 🎉 Lab Complete
 
