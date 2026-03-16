@@ -160,8 +160,6 @@ To authenticate, visit:
     https://login.tailscale.com/a/xxxxxxxxxxxxxxx
 ```
 
-![Tailscale authentication URL in Kali terminal](images/05-tailscale-auth-url.png)
-
 Open that URL in your browser and log in with GitHub.
 
 ### Step 3 — Install Tailscale on Linux Mint (Server)
